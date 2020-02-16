@@ -6,7 +6,7 @@
         <input v-model="basePath" id="input-base-path" type="text" :placeholder="basePlaceholder" />
       </div>
       <div class="generate-btn-ctn flex-row">
-        <button class="generate-btn">Generate</button>
+        <button @click="generate" class="generate-btn">Generate</button>
       </div>
     </div>
     <div class="rep-path-ctn flex-row">
@@ -29,6 +29,11 @@ export default {
       repPath: '',
       repPlaceholder: 'Enter your replacement path here...',
     };
+  },
+  methods: {
+    generate() {
+      this.$store.commit('generate');
+    },
   },
 };
 </script>

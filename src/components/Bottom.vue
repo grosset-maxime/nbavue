@@ -1,24 +1,24 @@
 <template>
   <div class="history-ctn">
-    <header>
+    <header v-if="count">
       <span class="label">History:</span>
       <span>({{count}})</span>
       <button>Toggle view</button>
-      <button>Clear</button>
+      <button @click="clear">Clear</button>
     </header>
   </div>
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex';
 
 export default {
   name: 'Bottom',
-  props: {
-    count: {
-      type: Number,
-      required: false,
-      default: 0,
-    },
+  computed: {
+    ...mapState(['count']),
+  },
+  methods: {
+    ...mapMutations(['clear']),
   },
 };
 </script>

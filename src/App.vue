@@ -25,6 +25,9 @@ export default {
 @import "./styles/_ui.scss";
 
 #nba {
+  $topHeight: 4.2em;
+  $bottomHeight: 12em;
+
   width: 100%;
   height: 100%;
   padding: 0 5px;
@@ -36,12 +39,13 @@ export default {
   }
 
   #top {
-    height: 4.2em;
+    height: $topHeight;
   }
 
   #middle {
     $margin: 10px;
     width: calc(100% - #{$margin * 2});
+    height: calc(100% - #{$topHeight + $bottomHeight});
     margin: $margin $margin;
     min-height: 250px;
     border-radius: 10px;
@@ -62,6 +66,7 @@ export default {
   }
 
   #bottom {
+    height: $bottomHeight;
     justify-content: flex-start;
     border-top: 1px solid #333;
     padding-top: 5px;
