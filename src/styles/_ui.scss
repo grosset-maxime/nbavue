@@ -1,0 +1,31 @@
+@import './_inputText';
+@import './button';
+
+* {
+  box-sizing: border-box;
+}
+  
+html, body {
+  background: #000;
+  color: #fff;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-size: 1em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.flex-col, .flex-row {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
+.flex-col {
+  flex-flow: column nowrap;
+}
+.flex-row {
+  flex-flow: row nowrap;
+}

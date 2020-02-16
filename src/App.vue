@@ -1,28 +1,70 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="nba">
+    <Top id="top" class="flex-col" />
+    <Middle id="middle" class="flex-col" />
+    <Bottom id="bottom" class="flex-col" />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue';
+import Top from './components/Top.vue';
+import Middle from './components/Middle.vue';
+import Bottom from './components/Bottom.vue';
 
 export default {
-  name: 'App',
+  name: 'nba',
   components: {
-    HelloWorld,
+    Top,
+    Middle,
+    Bottom,
   },
 };
 </script>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+@import "./styles/_ui.scss";
+
+#nba {
+  width: 100%;
+  height: 100%;
+  padding: 0 5px;
+
+  #top, #middle, #bottom {
+    flex: 1 1 auto;
+    align-self: auto;
+    width: 100%;
+  }
+
+  #top {
+    height: 4.2em;
+  }
+
+  #middle {
+    $margin: 10px;
+    width: calc(100% - #{$margin * 2});
+    margin: $margin $margin;
+    min-height: 250px;
+    border-radius: 10px;
+
+
+    &.hasInput {
+      cursor: pointer;
+      transition: .1s;
+
+      &:hover {
+        background: #111;
+      }
+
+      &:active {
+        transform: scale(0.9);
+      }
+    }
+  }
+
+  #bottom {
+    justify-content: flex-start;
+    border-top: 1px solid #333;
+    padding-top: 5px;
+  }
 }
 </style>
