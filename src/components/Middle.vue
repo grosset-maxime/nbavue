@@ -1,22 +1,23 @@
 <template>
-  <div :class="{ hasInput: randomPath }" @click="focus">
+  <div id="middle" :class="{ hasInput: randomPath }" @click="focus">
     <div class="random-num-ctn">
-      <span class="random-num">{{randomNum}}</span>
+      <span class="random-num">{{ randomNum }}</span>
       <span class="separator">/</span>
-      <span class="range-max-num">{{rangeMaxNum}}</span>
+      <span class="range-max-num">{{ rangeMaxNum }}</span>
     </div>
 
-    <div v-if="randomPath" class="random_path_ctn">
-      <input type="text" id="input-random-path" readonly="readonly"
+    <div v-if="$store.state.randomFolder" class="random-path-ctn">
+      <input type="text" class="input-random-path" readonly="readonly"
         ref="randomPathInput"
-        v-model="randomPath"
+        :value="randomPath"
+        :size="randomPathInputSize"
       />
     </div>
-
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'Middle',
@@ -24,7 +25,7 @@ export default {
     basePath: {
       type: String,
       required: false,
-      default: 'oueoueoue',
+      default: '',
     },
     repPath: {
       type: String,
@@ -34,14 +35,19 @@ export default {
   },
   data() {
     return {
-      randomNum: 0,
-      rangeMaxNum: 0,
     };
   },
   computed: {
-    randomPath() {
-      return this.basePath;
+    randomNum() {
+      return this.$store.state.randomNum || '-';
     },
+    rangeMaxNum() {
+      return this.$store.state.rangeMaxNum || '-';
+    },
+    randomPathInputSize() {
+      return this.$store.getters.randomPath.length;
+    },
+    ...mapGetters(['randomPath']),
   },
   methods: {
     focus() {
@@ -52,30 +58,37 @@ export default {
         document.execCommand('copy');
       }
     },
-    generate() {
-      // this;
-    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.random-num-ctn {
-  line-height: 5em;
-}
+#middle {
+  padding: 0 5px;
 
-.random-num {
-  font-size: 10.625em;
-}
+  .random-num-ctn {
+    line-height: 5em;
 
-.separator,
-.range-max-num {
-  font-size: 4em;
-}
+    .random-num {
+      font-size: 10.625em;
+    }
 
-#input-random-path {
-  padding: 6px;
-  color: #888;
-  font-size: 1em;
+    .separator,
+    .range-max-num {
+      font-size: 4em;
+    }
+  }
+
+  .random-path-ctn {
+    width: 100%;
+    text-align: center;
+
+    .input-random-path {
+      padding: 6px;
+      color: #888;
+      font-size: 1em;
+      max-width: 100%;
+    }
+  }
 }
 </style>

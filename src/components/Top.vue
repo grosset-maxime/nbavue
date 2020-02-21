@@ -30,9 +30,21 @@ export default {
       repPlaceholder: 'Enter your replacement path here...',
     };
   },
+  created() {
+    this.basePath = this.$store.state.basePath;
+  },
+  computed: {
+
+  },
   methods: {
     generate() {
-      this.$store.commit('generate');
+      if (this.$store.state.basePath !== this.basePath) {
+        this.$store.commit('setBasePath', this.basePath);
+      }
+
+      this.$store.dispatch('getRandom', {
+        basePath: this.basePath,
+      });
     },
   },
 };
