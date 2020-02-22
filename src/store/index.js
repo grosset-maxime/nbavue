@@ -4,6 +4,8 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 
 const BASE_URL = 'http://nba.local:8888';
+const WIN_SEP = '\\';
+const UNIX_SEP = '/';
 
 export default new Vuex.Store({
   state: {
@@ -16,17 +18,40 @@ export default new Vuex.Store({
   },
   getters: {
     randomPath(state) {
-      return `${state.basePath}/${state.randomFolder}`;
+      let separator = '';
+      const { basePath } = state;
+      const { repPath } = state;
+      const finalRepPath = `${repPath || basePath}`;
+      const finalRepPathLength = finalRepPath.length - 1;
+
+      if (finalRepPath.lastIndexOf(UNIX_SEP) !== finalRepPathLength
+        && finalRepPath.indexOf(UNIX_SEP) >= 0
+      ) {
+        separator = UNIX_SEP;
+      } else if (finalRepPath.lastIndexOf(WIN_SEP) !== finalRepPathLength
+        && finalRepPath.indexOf(WIN_SEP) >= 0
+      ) {
+        separator = WIN_SEP;
+      } else if (finalRepPath.indexOf(UNIX_SEP) === -1
+        && finalRepPath.indexOf(WIN_SEP) === -1
+      ) {
+        separator = WIN_SEP;
+      }
+
+      return `${finalRepPath}${separator}${state.randomFolder}`;
     },
   },
   mutations: {
     clear(state) {
       state.count = 0;
     },
-    setBasePath(state, basePath) {
+    basePath(state, basePath) {
       state.basePath = basePath;
     },
-    onRandom(state, data) {
+    repPath(state, repPath) {
+      state.repPath = repPath;
+    },
+    onGetRandom(state, data) {
       state.randomNum = data.randomNum;
       state.randomFolder = data.randomFolder;
       state.rangeMaxNum = data.nbFolders;
@@ -34,7 +59,7 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    async getRandom({ commit }, options) {
+    async getRandom({ state, commit }) {
       const url = `${BASE_URL}/?r=getRandomFolder_s`;
       const opts = {
         method: 'POST',
@@ -43,14 +68,14 @@ export default new Vuex.Store({
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          basePath: options.basePath,
+          basePath: state.basePath,
         }),
       };
 
       await fetch(url, opts)
         .then((response) => response.json().then((json) => {
           console.log(json);
-          commit('onRandom', json);
+          commit('onGetRandom', json);
         }))
         .catch((error) => console.error(error));
     },

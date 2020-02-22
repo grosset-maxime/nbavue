@@ -3,49 +3,70 @@
     <div class="base-path-ctn flex-row">
       <label for="input-base-path">Base path:</label>
       <div class="input-ctn flex-row">
-        <input v-model="basePath" id="input-base-path" type="text" :placeholder="basePlaceholder" />
+        <input
+          v-model.trim="basePath"
+          id="input-base-path"
+          type="text"
+          :placeholder="basePlaceholder"
+          tabindex="1"
+        >
       </div>
       <div class="generate-btn-ctn flex-row">
-        <button @click="generate" class="generate-btn">Generate</button>
+        <button
+          @click="getRandom"
+          class="generate-btn"
+          tabindex="3"
+        >
+          Generate
+        </button>
       </div>
     </div>
     <div class="rep-path-ctn flex-row">
       <label for="input-rep-path">Replacement path:</label>
       <div class="input-ctn flex-row">
-        <input v-model="repPath" id="input-rep-path" type="text" :placeholder="repPlaceholder" />
+        <input
+          v-model.trim="repPath"
+          id="input-rep-path"
+          type="text"
+          :placeholder="repPlaceholder"
+          tabindex="2"
+        >
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 
 export default {
   name: 'Top',
   data() {
     return {
-      basePath: '',
       basePlaceholder: 'Enter your base path here...',
-      repPath: '',
       repPlaceholder: 'Enter your replacement path here...',
     };
   },
-  created() {
-    this.basePath = this.$store.state.basePath;
-  },
   computed: {
-
+    basePath: {
+      get() {
+        return this.$store.state.basePath;
+      },
+      set(basePath) {
+        this.$store.commit('basePath', basePath);
+      },
+    },
+    repPath: {
+      get() {
+        return this.$store.state.repPath;
+      },
+      set(repPath) {
+        this.$store.commit('repPath', repPath);
+      },
+    },
   },
   methods: {
-    generate() {
-      if (this.$store.state.basePath !== this.basePath) {
-        this.$store.commit('setBasePath', this.basePath);
-      }
-
-      this.$store.dispatch('getRandom', {
-        basePath: this.basePath,
-      });
-    },
+    ...mapActions(['getRandom']),
   },
 };
 </script>
