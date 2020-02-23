@@ -6,12 +6,18 @@
     >
       <span class="label">History:</span>
       <span>({{ count }})</span>
-      <button @click="toggleHistories">
+      <v-btn
+        @click="toggleHistories"
+        :x-small="true"
+      >
         Toggle view
-      </button>
-      <button @click="clear">
+      </v-btn>
+      <v-btn
+        @click="clear"
+        :x-small="true"
+      >
         Clear
-      </button>
+      </v-btn>
     </div>
     <div
       class="history-list"
@@ -52,10 +58,12 @@ export default {
 .header {
   display: flex;
   flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
-// button {
-//   margin-left: 15px;
-// }
+button {
+  margin-left: 15px;
+}
 .label {
   padding-right: 5px;
 }

@@ -1,20 +1,22 @@
 <template>
-  <div
-    id="nba"
-  >
-    <Top
-      id="top"
-      class="flex-col"
-    />
-    <Middle
-      id="middle"
-      class="flex-col"
-    />
-    <Bottom
-      id="bottom"
-      class="flex-col"
-    />
-  </div>
+  <v-app>
+    <div
+      id="nba"
+    >
+      <Top
+        id="top"
+        class="flex-col"
+      />
+      <Middle
+        id="middle"
+        class="flex-col"
+      />
+      <Bottom
+        id="bottom"
+        class="flex-col"
+      />
+    </div>
+  </v-app>
 </template>
 
 <script>

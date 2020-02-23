@@ -119,12 +119,14 @@ export default new Vuex.Store({
 
       await fetch(url, opts)
         .then((response) => response.json().then((json) => {
-          console.log(json);
+          // console.log(json);
           if (json.success) {
             commit('onGetRandom', json);
           }
         }))
-        .catch((error) => console.error(error));
+        .catch(() => {
+          // console.error(error);
+        });
     },
   },
   modules: {
