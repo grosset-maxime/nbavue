@@ -53,9 +53,9 @@ export default {
   display: flex;
   flex-direction: row;
 }
-button {
-  margin-left: 15px;
-}
+// button {
+//   margin-left: 15px;
+// }
 .label {
   padding-right: 5px;
 }

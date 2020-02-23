@@ -22,6 +22,29 @@ import Top from '@/components/Top.vue';
 import Middle from '@/components/Middle.vue';
 import Bottom from '@/components/Bottom.vue';
 
+function attachKeyboardShorcuts() {
+  window.addEventListener('keyup', (e) => {
+    const { inputHasFocus } = this.$store.state;
+
+    // console.log(`code: ${e.code}`);
+    switch (e.code) {
+      case 'Space':
+      case 'Enter':
+        if (!inputHasFocus) {
+          this.$store.dispatch('getRandom');
+        }
+        break;
+
+      case 'Escape':
+        if (!inputHasFocus) {
+          this.$store.commit('showNewestRandom');
+        }
+        break;
+      default:
+    }
+  });
+}
+
 export default {
   name: 'Nba',
   components: {
@@ -30,26 +53,13 @@ export default {
     Bottom,
   },
   mounted() {
-    window.addEventListener('keyup', (e) => {
-      const { inputHasFocus } = this.$store.state;
+    this.$vuetify.theme.dark = true;
 
-      // console.log(`code: ${e.code}`);
-      switch (e.code) {
-        case 'Space':
-        case 'Enter':
-          if (!inputHasFocus) {
-            this.$store.dispatch('getRandom');
-          }
-          break;
+    attachKeyboardShorcuts.call(this);
 
-        case 'Escape':
-          if (!inputHasFocus) {
-            this.$store.commit('showNewestRandom');
-          }
-          break;
-        default:
-      }
-    });
+    if (this.$store.state.basePath) {
+      this.$store.dispatch('getRandom');
+    }
   },
 };
 </script>

@@ -120,7 +120,9 @@ export default new Vuex.Store({
       await fetch(url, opts)
         .then((response) => response.json().then((json) => {
           console.log(json);
-          commit('onGetRandom', json);
+          if (json.success) {
+            commit('onGetRandom', json);
+          }
         }))
         .catch((error) => console.error(error));
     },

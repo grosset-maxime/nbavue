@@ -16,9 +16,11 @@
 
       <div class="generate-btn-ctn flex-row">
         <v-btn
-          :dark="true"
-          class="generate-btn primary"
+          :small="true"
+          :color="'primary'"
+          class="generate-btn pink white--text"
           tabindex="3"
+          @click="getRandom"
         >
           Generate
         </v-btn>
@@ -84,9 +86,10 @@ label {
   cursor: pointer;
 }
 
-input {
+input[type=text] {
   width: 100%;
   padding-left: 4px;
+  height: 1.5em;
 }
 
 .base-path-ctn {
@@ -112,7 +115,7 @@ input {
 
   .input-ctn {
     flex: 1 1 auto;
-    padding: 0 5px;
+    padding-left: 5px;
   }
   label {
     flex: 0 1 auto;
