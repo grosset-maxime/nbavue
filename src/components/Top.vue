@@ -11,6 +11,7 @@
           tabindex="1"
           @focus="inputHasFocus(true)"
           @blur="inputHasFocus(false)"
+          @keyup.enter="getRandom"
         >
       </div>
 
@@ -20,7 +21,7 @@
           :color="'primary'"
           class="generate-btn pink white--text"
           tabindex="3"
-          @click="getRandom"
+          @click.once="getRandom"
         >
           Generate
         </v-btn>
@@ -38,6 +39,7 @@
           tabindex="2"
           @focus="inputHasFocus(true)"
           @blur="inputHasFocus(false)"
+          @keyup.enter="getRandom"
         >
       </div>
     </div>

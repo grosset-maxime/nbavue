@@ -79,7 +79,12 @@ export default {
         el.select();
         document.execCommand('copy');
       } else {
-        this.$store.dispatch('getRandom').then(() => this.focus());
+        this.$store.dispatch('getRandom')
+          .then(() => {
+            if (!this.$store.state.error) {
+              this.focus();
+            }
+          });
       }
     },
   },
