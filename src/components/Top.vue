@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <form @submit.prevent="getRandom">
     <div class="base-path-ctn flex-row">
       <label for="input-base-path">Base path:</label>
       <div class="input-ctn flex-row">
@@ -9,11 +9,13 @@
           type="text"
           :placeholder="basePlaceholder"
           tabindex="1"
+          @focus="inputHasFocus(true)"
+          @blur="inputHasFocus(false)"
         >
       </div>
+
       <div class="generate-btn-ctn flex-row">
         <button
-          @click="getRandom"
           class="generate-btn"
           tabindex="3"
         >
@@ -21,6 +23,7 @@
         </button>
       </div>
     </div>
+
     <div class="rep-path-ctn flex-row">
       <label for="input-rep-path">Replacement path:</label>
       <div class="input-ctn flex-row">
@@ -30,14 +33,16 @@
           type="text"
           :placeholder="repPlaceholder"
           tabindex="2"
+          @focus="inputHasFocus(true)"
+          @blur="inputHasFocus(false)"
         >
       </div>
     </div>
-  </div>
+  </form>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapMutations } from 'vuex';
 
 export default {
   name: 'Top',
@@ -67,6 +72,7 @@ export default {
   },
   methods: {
     ...mapActions(['getRandom']),
+    ...mapMutations(['inputHasFocus']),
   },
 };
 </script>
