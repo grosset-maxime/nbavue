@@ -18,6 +18,8 @@ export default new Vuex.Store({
     inputHasFocus: false,
     histories: [],
     showingHistory: false,
+    toggledHistories: false,
+    historyShowed: 0,
   },
   getters: {
     randomPath(state) {
@@ -48,6 +50,11 @@ export default new Vuex.Store({
     clear(state) {
       state.count = 0;
       state.histories = [];
+      state.showingHistory = false;
+      state.historyShowed = -1;
+      state.randomFolder = '';
+      state.randomNum = 0;
+      state.rangeMaxNum = 0;
     },
     basePath(state, basePath) {
       state.basePath = basePath;
@@ -57,6 +64,8 @@ export default new Vuex.Store({
     },
     onGetRandom(state, data) {
       state.showingHistory = false;
+      state.historyShowed = -1;
+
       state.randomNum = data.randomNum;
       state.randomFolder = data.randomFolder;
       state.rangeMaxNum = data.nbFolders;
@@ -78,15 +87,20 @@ export default new Vuex.Store({
       state.randomNum = history.randomNum;
       state.randomFolder = history.randomFolder;
       state.rangeMaxNum = history.rangeMaxNum;
+      state.historyShowed = history.id;
     },
     showNewestRandom(state) {
       state.showingHistory = false;
+      state.historyShowed = -1;
 
       const history = state.histories[0];
 
       state.randomNum = history.randomNum;
       state.randomFolder = history.randomFolder;
       state.rangeMaxNum = history.rangeMaxNum;
+    },
+    toggleHistories(state) {
+      state.toggledHistories = !state.toggledHistories;
     },
   },
   actions: {

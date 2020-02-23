@@ -6,12 +6,17 @@
     >
       <span class="label">History:</span>
       <span>({{ count }})</span>
-      <button>Toggle view</button>
+      <button @click="toggleHistories">
+        Toggle view
+      </button>
       <button @click="clear">
         Clear
       </button>
     </div>
-    <div class="history-list">
+    <div
+      class="history-list"
+      ref="historyList"
+    >
       <History
         v-for="history in histories"
         :key="history.id"
@@ -35,7 +40,10 @@ export default {
     ...mapState(['count', 'histories']),
   },
   methods: {
-    ...mapMutations(['clear']),
+    ...mapMutations(['clear', 'toggleHistories']),
+  },
+  updated() {
+    this.$refs.historyList.scrollTop = 0;
   },
 };
 </script>
@@ -52,6 +60,8 @@ button {
   padding-right: 5px;
 }
 .history-list {
+  $historyHeight: 37px;
+
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -59,5 +69,10 @@ button {
   max-width: 100%;
   overflow: auto;
   margin-top: 10px;
+  height: ($historyHeight + 8) * 2;
+
+  .history {
+    height: $historyHeight;
+  }
 }
 </style>

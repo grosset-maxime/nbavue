@@ -1,10 +1,11 @@
 <template>
   <div
     class="history"
-    @click="$store.commit('showHistory', history)"
+    @click="showHistory"
+    :class="[{active: $store.state.historyShowed === history.id}]"
   >
     <div
-      v-show="!isToggled"
+      v-show="isToggled"
       class="random-num"
       :title="history.randomFolder"
     >
@@ -14,7 +15,7 @@
     </div>
 
     <div
-      v-show="isToggled"
+      v-show="!isToggled"
       class="random-folder"
       :title="`${history.randomNum} / ${history.rangeMaxNum}`"
       style="display: none;"
@@ -44,6 +45,13 @@ export default {
     },
   },
   methods: {
+    showHistory() {
+      if (this.history.id === this.$store.state.count) {
+        this.$store.commit('showNewestRandom');
+      } else {
+        this.$store.commit('showHistory', this.history);
+      }
+    },
     toggleView() {
       this.toggled = !this.toggled;
     },
@@ -61,5 +69,32 @@ export default {
   padding: 5px;
   cursor: pointer;
   user-select: none;
+
+  &:hover {
+    background: #111;
+  }
+  &:active {
+    transform: scale(0.9);
+  }
+
+  &.active {
+    background: #eee;
+    color: #333;
+  }
+
+  &:first-child {
+    border-color: #fff;
+    background: #222;
+  }
+
+  .separator {
+    padding-left: 3px;
+    padding-right: 2px;
+    font-size: 0.8em;
+  }
+
+  .range-max {
+    font-size: 0.6em;
+  }
 }
 </style>

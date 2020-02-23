@@ -59,7 +59,7 @@ export default {
 
 #nba {
   $topHeight: 4.2em;
-  $bottomHeight: 12em;
+  $bottomHeight: 9.7em;
   $bottomPaddingTop: .3em;
 
   width: 100%;
