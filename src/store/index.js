@@ -7,10 +7,13 @@ const BASE_URL = 'http://nba.local:8888';
 const WIN_SEP = '\\';
 const UNIX_SEP = '/';
 
+// const BASE_PATH = '/Users/max/git';
+const BASE_PATH = '';
+
 export default new Vuex.Store({
   state: {
     count: 0,
-    basePath: '/Users/max/git',
+    basePath: BASE_PATH,
     repPath: '',
     randomNum: 0,
     rangeMaxNum: 0,
@@ -20,6 +23,8 @@ export default new Vuex.Store({
     showingHistory: false,
     toggledHistories: false,
     historyShowed: 0,
+    error: null,
+    showError: false,
   },
   getters: {
     randomPath(state) {
@@ -63,6 +68,8 @@ export default new Vuex.Store({
       state.repPath = repPath;
     },
     onGetRandom(state, data) {
+      state.error = null;
+      state.showError = false;
       state.showingHistory = false;
       state.historyShowed = -1;
 
@@ -78,6 +85,10 @@ export default new Vuex.Store({
         rangeMaxNum: state.rangeMaxNum,
       };
       state.histories.unshift(history);
+    },
+    onGetRandomError(state, error) {
+      state.error = error;
+      state.showError = true;
     },
     inputHasFocus(state, hasFocus) {
       state.inputHasFocus = hasFocus;
@@ -119,13 +130,17 @@ export default new Vuex.Store({
 
       await fetch(url, opts)
         .then((response) => response.json().then((json) => {
-          // console.log(json);
+          console.log(json);
           if (json.success) {
             commit('onGetRandom', json);
+          } else {
+            commit('onGetRandomError', json.error);
           }
         }))
-        .catch(() => {
+        .catch((error) => {
           // console.error(error);
+          const e = { publicMessage: error.toString() };
+          commit('onGetRandomError', e);
         });
     },
   },

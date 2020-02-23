@@ -3,6 +3,21 @@
     <div
       id="nba"
     >
+      <v-alert
+        v-show="$store.state.error"
+        prominent
+        border="left"
+        dismissible
+        max-height="70%"
+        type="error"
+        transition="slide-x-transition"
+        v-model="$store.state.showError"
+        class="error-alert"
+      >
+        {{ $store.state.error
+          ? $store.state.error.publicMessage || ''
+          : '' }}
+      </v-alert>
       <Top
         id="top"
         class="flex-col"
@@ -55,8 +70,6 @@ export default {
     Bottom,
   },
   mounted() {
-    this.$vuetify.theme.dark = true;
-
     attachKeyboardShorcuts.call(this);
 
     if (this.$store.state.basePath) {
@@ -124,6 +137,14 @@ export default {
     justify-content: flex-start;
     border-top: 1px solid #333;
     padding-top: $bottomPaddingTop;
+  }
+
+  .error-alert {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: calc(100% - 10px);
+    z-index: 1000;
   }
 }
 </style>
