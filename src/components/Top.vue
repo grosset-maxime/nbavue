@@ -15,12 +15,13 @@
       </div>
 
       <div class="generate-btn-ctn flex-row">
-        <button
-          class="generate-btn"
+        <v-btn
+          :dark="true"
+          class="generate-btn primary"
           tabindex="3"
         >
           Generate
-        </button>
+        </v-btn>
       </div>
     </div>
 
