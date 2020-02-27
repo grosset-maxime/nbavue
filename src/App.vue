@@ -83,7 +83,7 @@ export default {
 @import "./styles/_ui.scss";
 
 #nba {
-  $topHeight: 4.2em;
+  $topHeight: 5.5em;
   $bottomHeight: 9.7em;
   $bottomPaddingTop: .3em;
 

@@ -19,9 +19,10 @@
         <v-btn
           :small="true"
           :color="'primary'"
-          class="generate-btn pink white--text"
+          class="generate-btn"
           tabindex="3"
-          @click.once="getRandom"
+          @click="getRandom"
+          @keydown.prevent=""
         >
           Generate
         </v-btn>
@@ -43,6 +44,22 @@
         >
       </div>
     </div>
+
+    <div
+      class="btns-ctn flex-row"
+      v-if="buttons.length"
+    >
+      <v-btn
+        v-for="(button, index) in buttons"
+        :key="index"
+        @click="onButtonClick(button, index)"
+        :x-small="true"
+        :color="'orange lighten-1'"
+        :outlined="selectedBtn !== index"
+      >
+        {{ button.text }}
+      </v-btn>
+    </div>
   </form>
 </template>
 
@@ -55,6 +72,7 @@ export default {
     return {
       basePlaceholder: 'Enter your base path here...',
       repPlaceholder: 'Enter your replacement path here...',
+      selectedBtn: this.$store.state.buttons.findIndex((button) => button.selected),
     };
   },
   computed: {
@@ -74,8 +92,17 @@ export default {
         this.$store.commit('repPath', repPath);
       },
     },
+    buttons() {
+      return this.$store.state.buttons;
+    },
   },
   methods: {
+    onButtonClick(btn, index) {
+      this.basePath = btn.basePath;
+      this.repPath = btn.repPath;
+      this.selectedBtn = index;
+      this.getRandom();
+    },
     ...mapActions(['getRandom']),
     ...mapMutations(['inputHasFocus']),
   },
@@ -122,6 +149,14 @@ input[type=text] {
   label {
     flex: 0 1 auto;
     min-width: 4.7em;
+  }
+}
+
+.btns-ctn {
+  height: 30px;
+
+  .v-btn {
+    margin-left: 15px;
   }
 }
 </style>

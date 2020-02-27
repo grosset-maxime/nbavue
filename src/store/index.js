@@ -3,18 +3,32 @@ import Vuex from 'vuex';
 
 Vue.use(Vuex);
 
-const BASE_URL = 'http://nba.local:8888';
+const BASE_URL = process.env.VUE_APP_BASE_URL || '';
+
 const WIN_SEP = '\\';
 const UNIX_SEP = '/';
 
-// const BASE_PATH = '/Users/max/git';
-const BASE_PATH = '';
+let BASE_PATH = '';
+let REP_PATH = '';
+
+const buttons = Object.keys(process.env)
+  .filter((key) => key.indexOf('VUE_APP_BUTTON_') >= 0)
+  .map((b) => JSON.parse(process.env[b]));
+
+if (buttons.length) {
+  const selectedBtn = buttons.find((button) => button.selected);
+
+  if (selectedBtn) {
+    BASE_PATH = selectedBtn.basePath;
+    REP_PATH = selectedBtn.repPath;
+  }
+}
 
 export default new Vuex.Store({
   state: {
     count: 0,
     basePath: BASE_PATH,
-    repPath: '',
+    repPath: REP_PATH,
     randomNum: 0,
     rangeMaxNum: 0,
     randomFolder: '',
@@ -25,6 +39,7 @@ export default new Vuex.Store({
     historyShowed: 0,
     error: null,
     showError: false,
+    buttons,
   },
   getters: {
     randomPath(state) {
