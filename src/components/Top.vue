@@ -55,7 +55,7 @@
         @click="onButtonClick(button, index)"
         :x-small="true"
         :color="'orange lighten-1'"
-        :outlined="selectedBtn !== index"
+        :outlined="selectedBtnIndex !== index"
       >
         {{ button.text }}
       </v-btn>
@@ -72,7 +72,7 @@ export default {
     return {
       basePlaceholder: 'Enter your base path here...',
       repPlaceholder: 'Enter your replacement path here...',
-      selectedBtn: this.$store.state.buttons.findIndex((button) => button.selected),
+      selectedBtnIndex: -1,
     };
   },
   computed: {
@@ -96,15 +96,36 @@ export default {
       return this.$store.state.buttons;
     },
   },
+  watch: {
+    $route() {
+      this.updateSelectedBtnIndex();
+    },
+  },
   methods: {
+    updateSelectedBtnIndex() {
+      const queryKeys = Object.keys(this.$route.query);
+      if (queryKeys.length) {
+        const index = this.buttons.findIndex((button) => queryKeys.indexOf(button.name) >= 0);
+        if (index >= 0) {
+          this.selectedBtnIndex = index;
+        }
+      }
+    },
     onButtonClick(btn, index) {
       this.basePath = btn.basePath;
       this.repPath = btn.repPath;
-      this.selectedBtn = index;
+      this.selectedBtnIndex = index;
       this.getRandom();
     },
     ...mapActions(['getRandom']),
     ...mapMutations(['inputHasFocus']),
+  },
+  mounted() {
+    const index = this.$store.state.buttons.findIndex((button) => button.selected);
+    if (index >= 0) {
+      this.selectedBtnIndex = index;
+    }
+    this.updateSelectedBtnIndex();
   },
 };
 </script>
