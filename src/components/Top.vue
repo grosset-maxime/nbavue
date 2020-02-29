@@ -72,7 +72,7 @@ export default {
     return {
       basePlaceholder: 'Enter your base path here...',
       repPlaceholder: 'Enter your replacement path here...',
-      selectedBtnIndex: -1,
+      selectedBtnIndex: this.$store.state.buttons.findIndex((button) => button.selected),
     };
   },
   computed: {
@@ -98,11 +98,11 @@ export default {
   },
   watch: {
     $route() {
-      this.updateSelectedBtnIndex();
+      this.onRouteChange();
     },
   },
   methods: {
-    updateSelectedBtnIndex() {
+    onRouteChange() {
       const queryKeys = Object.keys(this.$route.query);
       if (queryKeys.length) {
         const index = this.buttons.findIndex((button) => queryKeys.indexOf(button.name) >= 0);
@@ -121,7 +121,12 @@ export default {
     ...mapMutations(['inputHasFocus']),
   },
   mounted() {
-    this.updateSelectedBtnIndex();
+    const queryKeys = Object.keys(this.$route.query);
+    if (queryKeys.length) {
+      this.onRouteChange();
+    } else if (this.basePath) {
+      this.$store.dispatch('getRandom');
+    }
   },
 };
 </script>

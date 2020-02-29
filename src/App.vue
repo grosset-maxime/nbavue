@@ -71,10 +71,6 @@ export default {
   },
   mounted() {
     attachKeyboardShorcuts.call(this);
-
-    if (this.$store.state.basePath) {
-      this.$store.dispatch('getRandom');
-    }
   },
 };
 </script>
