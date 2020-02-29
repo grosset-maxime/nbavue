@@ -131,7 +131,7 @@ export default new Vuex.Store({
   },
   actions: {
     async getRandom({ state, commit }) {
-      const url = `${BASE_URL}/?r=getRandomFolder_s`;
+      const url = `${BASE_URL}/api/getRandomFolder`;
       const opts = {
         method: 'POST',
         headers: {
@@ -145,7 +145,7 @@ export default new Vuex.Store({
 
       await fetch(url, opts)
         .then((response) => response.json().then((json) => {
-          console.log(json);
+          // console.log(json);
           if (json.success) {
             commit('onGetRandom', json);
           } else {

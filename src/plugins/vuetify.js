@@ -1,10 +1,22 @@
 import Vue from 'vue';
-import Vuetify from 'vuetify/lib';
+import Vuetify, {
+  VApp,
+  VBtn,
+  VAlert,
+} from 'vuetify/lib';
 
-Vue.use(Vuetify);
+Vue.use(Vuetify, {
+  components: {
+    VApp,
+    VBtn,
+    VAlert,
+  },
+});
 
-export default new Vuetify({
+const opts = {
   theme: {
     dark: true,
   },
-});
+};
+
+export default new Vuetify(opts);

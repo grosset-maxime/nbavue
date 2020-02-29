@@ -107,7 +107,7 @@ export default {
       if (queryKeys.length) {
         const index = this.buttons.findIndex((button) => queryKeys.indexOf(button.name) >= 0);
         if (index >= 0) {
-          this.selectedBtnIndex = index;
+          this.onButtonClick(this.buttons[index], index);
         }
       }
     },
@@ -121,10 +121,6 @@ export default {
     ...mapMutations(['inputHasFocus']),
   },
   mounted() {
-    const index = this.$store.state.buttons.findIndex((button) => button.selected);
-    if (index >= 0) {
-      this.selectedBtnIndex = index;
-    }
     this.updateSelectedBtnIndex();
   },
 };
