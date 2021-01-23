@@ -40,7 +40,9 @@ export default new Vuex.Store({
     error: null,
     showError: false,
     buttons,
+    showLoading: false,
   },
+
   getters: {
     randomPath(state) {
       let separator = '';
@@ -65,7 +67,10 @@ export default new Vuex.Store({
 
       return `${finalRepPath}${separator}${state.randomFolder}`;
     },
+
+    showLoading: (state) => state.showLoading,
   },
+
   mutations: {
     clear(state) {
       state.count = 0;
@@ -76,12 +81,15 @@ export default new Vuex.Store({
       state.randomNum = 0;
       state.rangeMaxNum = 0;
     },
+
     basePath(state, basePath) {
       state.basePath = basePath;
     },
+
     repPath(state, repPath) {
       state.repPath = repPath;
     },
+
     onGetRandom(state, data) {
       state.error = null;
       state.showError = false;
@@ -101,13 +109,16 @@ export default new Vuex.Store({
       };
       state.histories.unshift(history);
     },
+
     onGetRandomError(state, error) {
       state.error = error;
       state.showError = true;
     },
+
     inputHasFocus(state, hasFocus) {
       state.inputHasFocus = hasFocus;
     },
+
     showHistory(state, history) {
       state.showingHistory = true;
       state.randomNum = history.randomNum;
@@ -115,6 +126,7 @@ export default new Vuex.Store({
       state.rangeMaxNum = history.rangeMaxNum;
       state.historyShowed = history.id;
     },
+
     showNewestRandom(state) {
       state.showingHistory = false;
       state.historyShowed = -1;
@@ -125,12 +137,18 @@ export default new Vuex.Store({
       state.randomFolder = history.randomFolder;
       state.rangeMaxNum = history.rangeMaxNum;
     },
+
     toggleHistories(state) {
       state.toggledHistories = !state.toggledHistories;
     },
+
+    showLoading(state, value) { state.showLoading = value; },
   },
+
   actions: {
     async getRandom({ state, commit }) {
+      commit('showLoading', true);
+
       const url = `${BASE_URL}/api/getRandomFolder`;
       const opts = {
         method: 'POST',
@@ -156,6 +174,9 @@ export default new Vuex.Store({
           // console.error(error);
           const e = { publicMessage: error.toString() };
           commit('onGetRandomError', e);
+        })
+        .finally(() => {
+          commit('showLoading', false);
         });
     },
   },

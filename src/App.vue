@@ -3,6 +3,17 @@
     <div
       id="nba"
     >
+      <v-progress-linear
+        :active="$store.getters.showLoading"
+        class="loading-bar"
+        color="orange"
+        absolute
+        top
+        indeterminate
+        height="2"
+        background-opacity="0"
+      />
+
       <v-alert
         v-show="$store.state.error"
         prominent
@@ -67,11 +78,13 @@ function attachKeyboardShorcuts() {
 
 export default {
   name: 'Nba',
+
   components: {
     Top,
     Middle,
     Bottom,
   },
+
   mounted() {
     attachKeyboardShorcuts.call(this);
   },
