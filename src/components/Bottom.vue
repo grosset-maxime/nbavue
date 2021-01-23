@@ -34,8 +34,7 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex';
-import History from '@/components/History.vue';
-
+import History from './History.vue';
 
 export default {
   name: 'Bottom',

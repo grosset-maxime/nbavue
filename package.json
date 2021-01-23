@@ -1,9 +1,9 @@
 {
   "name": "nbavue",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "dev": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
@@ -25,6 +25,8 @@
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-vue": "^6.2.2",
     "node-sass": "^4.14.1",
+    "prettier": "^2.2.1",
+    "prettier-airbnb-config": "^1.0.0",
     "sass": "^1.32.5",
     "sass-loader": "^8.0.2",
     "vue-cli-plugin-vuetify": "^2.0.9",

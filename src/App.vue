@@ -18,14 +18,17 @@
           ? $store.state.error.publicMessage || ''
           : '' }}
       </v-alert>
+
       <Top
         id="top"
         class="flex-col"
       />
+
       <Middle
         id="middle"
         class="flex-col"
       />
+
       <Bottom
         id="bottom"
         class="flex-col"
@@ -35,9 +38,9 @@
 </template>
 
 <script>
-import Top from '@/components/Top.vue';
-import Middle from '@/components/Middle.vue';
-import Bottom from '@/components/Bottom.vue';
+import Top from './components/Top.vue';
+import Middle from './components/Middle.vue';
+import Bottom from './components/Bottom.vue';
 
 function attachKeyboardShorcuts() {
   window.addEventListener('keyup', (e) => {
@@ -76,18 +79,20 @@ export default {
 </script>
 
 <style lang="scss">
-@import "./styles/_ui.scss";
+@import './styles/_ui.scss';
 
 #nba {
   $topHeight: 5.5em;
   $bottomHeight: 9.7em;
-  $bottomPaddingTop: .3em;
+  $bottomPaddingTop: 0.3em;
 
   width: 100%;
   height: 100%;
   padding: 0 5px;
 
-  #top, #middle, #bottom {
+  #top,
+  #middle,
+  #bottom {
     flex: 1 1 auto;
     align-self: auto;
     width: 100%;
@@ -105,10 +110,9 @@ export default {
     min-height: 250px;
     border-radius: 10px;
 
-
     &.show-input {
       cursor: pointer;
-      transition: .1s;
+      transition: 0.1s;
 
       &:hover {
         background: #111;
