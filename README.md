@@ -27,7 +27,7 @@ npm run dev
     rm -dR /var/services/web/nba/public/temp
     mkdir /var/services/web/nba/public/temp
     mv /var/services/web/nba/public/js /var/services/web/nba/public/temp
-    mv -dR /var/services/web/nba/public/css /var/services/web/nba/public/temp
+    mv /var/services/web/nba/public/css /var/services/web/nba/public/temp
     mv /var/services/web/nba/public/index.php /var/services/web/nba/public/temp
     7z x /volume1/homes/maxou/dist.7z
     ```
