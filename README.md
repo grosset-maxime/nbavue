@@ -2,7 +2,7 @@
 
 ## Project setup
 ```
-npm install
+npm install --legacy-peer-deps # --legacy-peer-deps to by-pass dev package prettier-airbnb-config deps on very old version of prettier.
 cp ./.env.local.dist ./.env.local
 ```
 
